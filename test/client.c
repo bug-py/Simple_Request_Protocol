@@ -1,7 +1,30 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "api/client.h"
 #include "tool/alloc.h"
+int GetChoice(){
+    printf("Convert string => [UPPER/LOWER] : ");
+    char* ptr;
+    size_t len;
+    while(1){
+        ptr=NULL;
+        len=0;
+        ssize_t n=getline(&ptr,&len,stdin);
+        if(n==EOF){
+          exit(EXIT_FAILURE);   
+        }
+        if(strcmp(ptr,"UPPER\n")==0){
+            free(ptr);
+            return 0;
+        }
+        if(strcmp(ptr,"LOWER\n")==0){
+            free(ptr);
+            return 1;
+        }
+        free(ptr);
+    }
+}
 int main(){
     connection_t connection;
     if(CreateConnection(&connection,"127.0.0.1",3000)<0){
@@ -10,6 +33,7 @@ int main(){
     }
     message_t request;
     message_t response;
+    uint16_t id=(uint16_t)GetChoice();
     while(true){
         printf("Input : ");
         char* str=NULL;
@@ -23,7 +47,7 @@ int main(){
             continue;
         }
         request.status=GET;
-        request.id=0;
+        request.id=id;
         request.length=len-1;
         request.body=str;
         switch(Request(&connection,&request,&response,false)){

@@ -50,7 +50,7 @@ int main(){
     PrintMessage(&message);
     free_message(&message);
     free_parser(&ctx);
-    char str[]="PLAYER POSTION\nX\r4584552554455455.4555554555\r\nY\r4565884555414555.575757588\r\n";
+    char str[]="Protcol Custom";
     size_t len=strlen(str)+SIZEHEADER;
     uint8_t buffer[len];
     message.status=GET;

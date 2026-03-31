@@ -1,38 +1,47 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
 #include "api/server.h"
-#include "tool/alloc.h"
+
 void Upper(char* dest ,char* src,size_t len){
     for(size_t i=0;i<len;i++){
         dest[i]=(char)toupper(src[i]);
     }
 }
+void Lower(char* dest,char* src,size_t len){
+    for(size_t i=0;i<len;i++){
+        dest[i]=(char)tolower(src[i]);
+    }
+}
 void response(char* ip,uint16_t port,message_t* request,message_t* response){
     memset(response,0,sizeof(message_t));
-    printf("ip :%s port : %u",ip,(unsigned int)port);
+    printf("IP :%s PORT : %u\n",ip,(unsigned int)port);
     if(request->status==GET){
+        size_t len=request->length;
          switch(request->id){
             case 0:
-                size_t len=request->length;
-                printf("%lu\n",len);
-                char* upper_str=safe_alloc(sizeof(char),len,NULL);
+                char* upper_str=malloc(sizeof(char)*len);
                 Upper(upper_str,request->body,len);
                 response->status=OK;
                 response->length=len;
                 response->body=upper_str;
-                return;
-
+                break;
+            case 1:
+                char* lower_str=malloc(sizeof(char)*len);
+                Lower(lower_str,request->body,len);
+                response->status=OK;
+                response->length=len;
+                response->body=lower_str;
+                break;
             default:
                 response->status=NOT_FOUND;
-                return ;
+                break;
           }
           
+    }else{
+          response->status=NOT_SUPPORTED;
     }
-    response->status=NOT_SUPPORTED;
-    return ;
-    
-
 }
 int main(){
     int serverfd=CreateServer("127.0.0.1",3000);
@@ -46,6 +55,8 @@ int main(){
     }
             
      
-    ServerLoop(serverfd,true,response);
-    perror("Error Sys");
+    if(ServerLoop(serverfd,true,response)==-1){
+        perror("Server error");
+    }
+    
 }

@@ -10,6 +10,7 @@ LIB=$(LIBPATH)lib$(NAMELIB).a
 FLAG=-Werror -Wextra  -I $(HEADER)
 TEST=./test/
 BIN=./bin/
+.PHONY : all clean test
 
 all: $(LIB) 
 

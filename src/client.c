@@ -50,11 +50,11 @@ state_request_t Request(connection_t* connection,message_t* request,message_t* r
     NetworkResult_t state;
     while(true){
             state=RecvMessage(connection->fd,&ctx);
-            free_parser(&(ctx));
             switch(state){
                 case NET_WAIT:
                     continue;
                 case NET_SUCCESS:
+                    free_parser(&(ctx));
                     if(close_connection){
                         close(connection->fd);
                         connection->fd=-1;
@@ -63,6 +63,7 @@ state_request_t Request(connection_t* connection,message_t* request,message_t* r
                 case NET_SYS:
                 case NET_PROTOCOL:
                 case NET_DISCONNECTED:
+                    free_parser(&(ctx));
                     close(connection->fd);
                     connection->fd=-1;
                     return REQUEST_FAILED;
