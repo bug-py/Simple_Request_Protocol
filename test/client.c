@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "api/client.h"
-#include "tool/alloc.h"
+
 int GetChoice(){
     printf("Convert string => [UPPER/LOWER] : ");
     char* ptr;

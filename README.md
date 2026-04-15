@@ -31,5 +31,13 @@ typedef struct{
 #### length : est le nombre d'octets que prend le message principal
 #### body : est le message à envoyer
 #### *Vous pouvez retrouver les détails du protocole dans [protocol.h](/include/internal/protocol.h)*
-- ## Serveur
+- ## Utilisation
+#### Dans cette partie, on va écrire un petit client et serveur avec ce protocole
+#### Donc, avec le serveur qui tournera en boucle et traitera les requêtes
+#### l'utilisateur pourra lancer le client 
+#### Avec lequel il enverra grâce au terminal des caractères que le serveur convertira soit en majuscule soit en minuscule
+### Client 
+![client terminal](/img/client_terminal.png)
+### Serveur
+![serveur termianl](/img/server_terminal.png)
 
