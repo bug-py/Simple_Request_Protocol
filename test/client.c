@@ -46,7 +46,7 @@ int main(){
         if(len==1){
             continue;
         }
-        request.status=GET;
+        request.status=POST;
         request.id=id;
         request.length=len-1;
         request.body=str;

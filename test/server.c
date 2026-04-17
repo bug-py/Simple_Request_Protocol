@@ -17,7 +17,7 @@ void Lower(char* dest,char* src,size_t len){
 void response(char* ip,uint16_t port,message_t* request,message_t* response){
     memset(response,0,sizeof(message_t));
     printf("IP :%s PORT : %u\n",ip,(unsigned int)port);
-    if(request->status==GET){
+    if(request->status==POST){
         size_t len=request->length;
          switch(request->id){
             case 0:
